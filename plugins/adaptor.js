@@ -50,11 +50,11 @@ adaptor.prototype.putTiddler = function(tiddler, context, userParams, callback) 
 		success: function(data, status, xhr) {
 			context.responseData = responseData;
 			adaptor.putTiddlerCallback(xhr.status, context,
-				xhr.responseText, uri, xhr);
+				xhr.responseText, options.url, xhr);
 		},
 		error: function(xhr, error, exc) {
 			adaptor.putTiddlerCallback(xhr.status, context,
-				xhr.responseText, uri, xhr);
+				xhr.responseText, options.url, xhr);
 		}
 	};
 	var id = fields["server.id"];
