@@ -22,17 +22,18 @@ adaptor.serverLabel = "CouchDB";
 adaptor.mimeType = "application/json";
 
 adaptor.prototype.putTiddler = function(tiddler, context, userParams, callback) {
+	var fields = tiddler.fields;
 	context = this.setContext(context, userParams, callback);
 	context.title = tiddler.title;
 	context.tiddler = tiddler;
-	context.host = context.host || this.fullHostName(tiddler.fields["server.host"]);
-	context.workspace = context.workspace || tiddler.fields["server.workspace"];
+	context.host = context.host || this.fullHostName(fields["server.host"]);
+	context.workspace = context.workspace || fields["server.workspace"];
 
 	var payload = {
-		type: tiddler.fields["server.content-type"] || null,
+		type: fields["server.content-type"] || null,
 		text: tiddler.text,
 		tags: tiddler.tags,
-		fields: $.extend({}, tiddler.fields)
+		fields: $.extend({}, fields)
 	};
 	delete payload.fields.changecount;
 	$.each(payload.fields, function(key, value) {
@@ -56,10 +57,12 @@ adaptor.prototype.putTiddler = function(tiddler, context, userParams, callback) 
 				xhr.responseText, uri, xhr);
 		}
 	};
-	var id = tiddler.fields["server.id"];
+	var id = fields["server.id"];
 	if(id) {
 		options.url += "/" + id;
 		options.type = "PUT";
+		payload.rev = fields["server.page.revision"];
+		options.data = $.toJSON(payload);
 	} else {
 		options.type = "POST";
 	}
@@ -71,7 +74,9 @@ adaptor.putTiddlerCallback = function(status, context, responseText, uri, xhr) {
 	context.statusText = xhr.statusText;
 	context.httpStatus = xhr.status;
 	if(context.responseData) {
-		context.tiddler.fields["server.id"] = context.responseData.id;
+		var fields = context.tiddler.fields;
+		fields["server.id"] = context.responseData.id;
+		fields["server.page.revision"] = context.responseData.rev;
 	}
 	if(context.callback) {
 		context.callback(context, context.userParams);
