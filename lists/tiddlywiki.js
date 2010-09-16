@@ -12,6 +12,7 @@ provides("html", function() {
 	//start(headers); // TODO
 	var row, tiddlers = [];
 	while(row = getRow()) {
+		row.value.tags = "[[" + row.value.tags.join("]] [[") + "]]"; // XXX: hacky
 		tiddlers.push(row.value);
 	}
 	tiddlers = Mustache.to_html(tiddler, { tiddlers: tiddlers, db: db, host: host });
