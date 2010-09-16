@@ -1,0 +1,7 @@
+{
+	"env": {
+		"default": {
+			"db": "http://fnd.couchone.com"
+		}
+	}
+}
