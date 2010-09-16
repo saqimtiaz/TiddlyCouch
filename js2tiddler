@@ -31,7 +31,6 @@ def main(args):
 
 	print json.dumps(tiddler)
 
-
 	return True
 
 
