@@ -28,11 +28,12 @@ adaptor.prototype.putTiddler = function(tiddler, context, userParams, callback) 
 	context.tiddler = tiddler;
 	context.host = context.host || this.fullHostName(fields["server.host"]);
 	context.workspace = context.workspace || fields["server.workspace"];
-
 	var payload = {
 		type: fields["server.content-type"] || null,
 		title: tiddler.title,
-		modified: tiddler.modified,
+		modified: tiddler.modified? tiddler.modified.convertToYYYYMMDDHHMM() : '',
+		created: tiddler.created? tiddler.created.convertToYYYYMMDDHHMM() : '',
+		creator: tiddler.creator,
 		modifier: tiddler.modifier,
 		text: tiddler.text,
 		tags: tiddler.tags,
