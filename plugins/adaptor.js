@@ -7,7 +7,7 @@
 |''Source''|[TBD]|
 |''CodeRepository''|[TBD]|
 |''License''|[[BSD|http://www.opensource.org/licenses/bsd-license.php]]|
-|''CoreVersion''|2.6|
+|''CoreVersion''|2.5|
 |''Keywords''|serverSide CouchDB|
 !Code
 ***/
@@ -42,7 +42,7 @@ adaptor.prototype.putTiddler = function(tiddler, context, userParams, callback) 
 	});
 
 	var options = {
-		url: "%0/%1".format(context.host, encodeURIComponent(workspace)),
+		url: context.host + "/" + encodeURIComponent(workspace),
 		type: null,
 		contentType: adaptor.mimeType,
 		data: $.toJSON(payload),
