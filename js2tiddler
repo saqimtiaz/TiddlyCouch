@@ -11,10 +11,14 @@ import json
 def main(args):
 	args = [unicode(arg, "utf-8") for arg in args]
 
-	filename = args[1]
-	f = open(filename)
-	source = f.read()
-	f.close()
+	try:
+		filename = args[1]
+		f = open(filename)
+		source = f.read()
+		f.close()
+	except IndexError:
+		source = sys.stdin.read()
+		filename = "ServerSideSavingPlugin" # XXX: hacky
 
 	tiddler = {
 		"title": filename.rsplit(".", 1),
