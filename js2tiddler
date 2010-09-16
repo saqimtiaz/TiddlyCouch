@@ -7,21 +7,24 @@ converts a JavaScipt file to a plugin tiddler (JSON format)
 import sys
 import json
 
+from urllib2 import urlopen
+
 
 def main(args):
 	args = [unicode(arg, "utf-8") for arg in args]
 
+	uri = args[1]
 	try:
-		filename = args[1]
-		f = open(filename)
+		f = open(uri)
 		source = f.read()
 		f.close()
-	except IndexError:
-		source = sys.stdin.read()
-		filename = "ServerSideSavingPlugin" # XXX: hacky
+	except IOError:
+		source = urlopen(uri).read()
+
+	filename = uri.rsplit("/", 1)[1]
 
 	tiddler = {
-		"title": filename.rsplit(".", 1),
+		"title": filename.rsplit(".", 1)[0],
 		"tags": ["systemConfig"],
 		"text": source
 	}

@@ -43,7 +43,7 @@ adaptor.prototype.putTiddler = function(tiddler, context, userParams, callback) 
 	});
 
 	var options = {
-		url: context.host + "/" + encodeURIComponent(workspace),
+		url: context.host + "/" + encodeURIComponent(context.workspace),
 		type: null,
 		contentType: adaptor.mimeType,
 		data: $.toJSON(payload),
