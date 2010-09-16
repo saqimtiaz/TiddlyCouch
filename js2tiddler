@@ -1,0 +1,33 @@
+#!/usr/bin/env python
+
+"""
+converts a JavaScipt file to a plugin tiddler (JSON format)
+"""
+
+import sys
+import json
+
+
+def main(args):
+	args = [unicode(arg, "utf-8") for arg in args]
+
+	filename = args[1]
+	f = open(filename)
+	source = f.read()
+	f.close()
+
+	tiddler = {
+		"title": filename.rsplit(".", 1),
+		"tags": ["systemConfig"],
+		"text": source
+	}
+
+	print json.dumps(tiddler)
+
+
+	return True
+
+
+if __name__ == "__main__":
+	status = not main(sys.argv)
+	sys.exit(status)

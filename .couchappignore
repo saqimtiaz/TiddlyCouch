@@ -1,4 +1,5 @@
 [
 	"deploy.sh",
+	"plugins",
 	"fixtures"
 ]
