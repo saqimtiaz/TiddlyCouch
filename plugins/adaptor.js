@@ -32,10 +32,18 @@ adaptor.prototype.putTiddler = function(tiddler, context, userParams, callback) 
 	var payload = {
 		type: fields["server.content-type"] || null,
 		title: tiddler.title,
+		modified: tiddler.modified,
+		modifier: tiddler.modifier,
 		text: tiddler.text,
 		tags: tiddler.tags,
 		fields: $.extend({}, fields)
 	};
+	if(tiddler.created) {
+		payload.created = tiddler.created;
+	}
+	if(tiddler.creator) {
+		payload.creator = tiddler.creator;
+	}
 	delete payload.fields.changecount;
 	$.each(payload.fields, function(key, value) {
 		if(key.indexOf("server.") == 0) {

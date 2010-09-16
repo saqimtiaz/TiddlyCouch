@@ -10,7 +10,8 @@ var tiddler = "{{#tiddlers}}" + templates.tiddlywiki.tiddler + "{{/tiddlers}}";
 
 provides("html", function() {
 	//start(headers); // TODO
-	var row, tiddlers = [];
+	var tiddlers = []; // TODO: inject config for defaultCustomFields
+	var row;
 	while(row = getRow()) {
 		row.value.tags = "[[" + row.value.tags.join("]] [[") + "]]"; // XXX: hacky
 		row.value.text = row.value.text.replace(/</g, "&lt;").replace(/>/g, "&gt;"); // XXX: hacky
