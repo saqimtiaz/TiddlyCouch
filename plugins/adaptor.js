@@ -31,6 +31,7 @@ adaptor.prototype.putTiddler = function(tiddler, context, userParams, callback) 
 
 	var payload = {
 		type: fields["server.content-type"] || null,
+		title: tiddler.title,
 		text: tiddler.text,
 		tags: tiddler.tags,
 		fields: $.extend({}, fields)
@@ -48,7 +49,7 @@ adaptor.prototype.putTiddler = function(tiddler, context, userParams, callback) 
 		contentType: adaptor.mimeType,
 		data: $.toJSON(payload),
 		success: function(data, status, xhr) {
-			context.responseData = responseData;
+			context.responseData = data;
 			adaptor.putTiddlerCallback(xhr.status, context,
 				xhr.responseText, options.url, xhr);
 		},
@@ -61,7 +62,8 @@ adaptor.prototype.putTiddler = function(tiddler, context, userParams, callback) 
 	if(id) {
 		options.url += "/" + id;
 		options.type = "PUT";
-		payload.rev = fields["server.page.revision"];
+		payload._id = fields["server.id"];
+		payload._rev = fields["server.page.revision"];
 		options.data = $.toJSON(payload);
 	} else {
 		options.type = "POST";

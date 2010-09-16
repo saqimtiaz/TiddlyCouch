@@ -13,7 +13,7 @@ provides("html", function() {
 	var row, tiddlers = [];
 	while(row = getRow()) {
 		row.value.tags = "[[" + row.value.tags.join("]] [[") + "]]"; // XXX: hacky
-		row.value.text = row.value.text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+		row.value.text = row.value.text.replace(/</g, "&lt;").replace(/>/g, "&gt;"); // XXX: hacky
 		tiddlers.push(row.value);
 	}
 	tiddlers = Mustache.to_html(tiddler, { tiddlers: tiddlers, db: db, host: host });
