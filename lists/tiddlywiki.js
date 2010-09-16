@@ -1,6 +1,8 @@
 function(head, req) {
 
 var Mustache = require("vendor/couchapp/lib/mustache");
+var db = req.info.db_name;
+var host = req.headers.Host;
 
 var ddoc = this;
 var templates = ddoc.templates;
@@ -12,7 +14,7 @@ provides("html", function() {
 	while(row = getRow()) {
 		tiddlers.push(row.value);
 	}
-	tiddlers = Mustache.to_html(tiddler, { tiddlers: tiddlers });
+	tiddlers = Mustache.to_html(tiddler, { tiddlers: tiddlers, db: db, host: host });
 	return templates.tiddlywiki.empty.replace('<div id="storeArea">',
 		'<div id="storeArea">\n' + tiddlers);
 });

@@ -1,23 +1,18 @@
 (function($) {
-
-var saveTiddler = function() {
-	$.couch.db("tiddlydb").saveDoc({
-		_id: "XXX",
-		tags: ["foo", "bar"]
-	}, {
-		success: function(id, ok, rev) {
-			console.log("success", this, arguments);
-		},
-		error: function(id, ok, rev) {
-			console.log("error", this, arguments);
-		}
-	});
+var saveTiddler=function(tiddler){
+    $.couch.db("tiddlydb").saveDoc(tiddler,{
+        success:function(resp){
+            console.log("success",this,arguments);
+            tiddler.fields["id"] = resp.id;
+            tiddler.fields["rev"] = resp.rev;
+        },
+        error: function(resp){
+            console.log("error",this,arguments);}
+    })
 };
-
 if($.couch) {
-	saveTiddler();
+	saveTiddler(store.getTiddler("Foo"));
 } else {
-	$.getScript("/_utils/script/jquery.couch.js", saveTiddler);
+	$.getScript("/_utils/script/jquery.couch.js", saveTiddler(store.getTiddler("Foo")));
 }
-
 })(jQuery);
