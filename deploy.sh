@@ -8,8 +8,8 @@ url="$*"
 	> fixtures/ServerSideSavingPlugin.json
 ./js2tiddler "http://jquery-json.googlecode.com/files/jquery.json-2.2.min.js" \
 	> fixtures/jquery-json.json
-./js2tiddler plugins/CouchdbAdaptor.js > fixtures/CouchdbAdaptor.json
-./js2tiddler plugins/CouchdbConfig.js > fixtures/CouchdbConfig.json
+./js2tiddler plugins/CouchDB.js > fixtures/CouchDBAdaptor.json
+./js2tiddler plugins/CouchDBConfig.js > fixtures/CouchDBConfig.json
 
 couchapp pushdocs fixtures $url
 
